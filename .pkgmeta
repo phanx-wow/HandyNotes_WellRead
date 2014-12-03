@@ -1,0 +1,12 @@
+package-as: HandyNotes_WellRead
+
+manual-changelog:
+   filename: CHANGELOG.md
+   markup-type: markdown
+
+ignore:
+   - CHANGELOG.md
+   - README.md
+
+required-dependencies:
+   - handynotes
