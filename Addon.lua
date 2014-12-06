@@ -278,7 +278,7 @@ function pluginHandler:OnEnter(mapFile, coord)
 		local x, y = HandyNotes:getXY(coord)
 		tooltip:AddLine(format("%s (%s, %s)", zone, x * 100, y * 100), 0.7, 0.7, 0.7)
 
-		if TomTom then
+		if TomTom and not Minimap:IsMouseOver() then -- can't right-click on the minimap?
 			tooltip:AddLine(L["<Right-Click to set a waypoint in TomTom.>"])
 			tooltip:AddLine(L["<Ctrl-Right-Click for additional waypoint options.>"])
 		end
