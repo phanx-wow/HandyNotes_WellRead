@@ -453,18 +453,19 @@ function Addon:CRITERIA_UPDATE(...)
 	for mapFile, coords in pairs(data) do
 		for coord, book in pairs(coords) do
 			local name, _, complete = GetAchievementCriteriaInfoByID(ACHIEVEMENT_ID, book.criteria)
-			book.name = name
 			if complete then
-				--print("COMPLETE:", name, book.read)
+				if book.name and not book.read then
+					--print("COMPLETE:", name)
+					changed = true
+				end
 				local waypoint = book.waypoint
 				if waypoint and TomTom:IsValidWaypoint(waypoint) then
 					TomTom:RemoveWaypoint(waypoint)
 				end
 				book.waypoint = nil
-				--coords[coord] = nil
-				changed = not book.read
 				book.read = true
 			end
+			book.name = name
 		end
 	end
 	if changed then
