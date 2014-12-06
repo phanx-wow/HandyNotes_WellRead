@@ -6,8 +6,6 @@
 	http://www.curse.com/addons/wow/handynotes-well-read
 	https://github.com/Phanx/HandyNotes_WellRead
 ----------------------------------------------------------------------]]
--- TODO:
--- * Option to show/hide books in high level opposite faction areas
 
 local ADDON_NAME = ...
 local HandyNotes = LibStub("AceAddon-3.0"):GetAddon("HandyNotes")
@@ -26,6 +24,7 @@ if GetLocale() == "deDE" then
 	L["Just this book"] = "Nur dieses Büch"
 	L["All books in this zone"] = "Alle Bücher in diesem Gebiet"
 	L["All books everywhere"] = "Alle Bücher überall"
+	L["Unread unique books in: %s"] = "Es gibt ungelesene einzigartige Bücher in: %s"
 	-- Notes
 	L["Alliance area"] = "Allianzstelle"
 	L["Around back"] = "Hinter dem Gebäude"
@@ -38,7 +37,7 @@ if GetLocale() == "deDE" then
 	L["Talk to Chromie for phasing"] = "Sprich mit Chromie, um die Phase zu wechseln"
 	L["Top level"] = "Im Dachgeschoss"
 	L["Underground"] = "Unterirdisch"
-	L["Unique"] = "Einzig"
+	L["Unique"] = "Einzigartig"
 	L["Upstairs"] = "Nach oben"
 elseif GetLocale():match("^es") then
 	-- Main
@@ -48,6 +47,7 @@ elseif GetLocale():match("^es") then
 	L["Just this book"] = "Sólo este libro"
 	L["All books in this zone"] = "Todos libros en esta zona"
 	L["All books everywhere"] = "Todos libros en todas zonas"
+	L["Unread unique books in: %s"] = "Hay libros únicos no leídos en: %s"
 	-- Notes
 	L["Alliance area"] = "Lugar de la Alianza"
 	L["Around back"] = "Por detrás"
@@ -171,7 +171,7 @@ local data = {
 		[28914128] = { criteria = 3802, zone = 36, faction = "Alliance" }, -- War of the Three Hammers (Lakeshire)
 	},
 	["Scholomance"] = {
-		[56574115] = { criteria = 3789, zone = 898, level = 2 }, -- The Invasion of Draenor (Chamber of Summoning)
+		[56574115] = { criteria = 3789, zone = 898, level = 2, unique = true }, -- The Invasion of Draenor (Chamber of Summoning)
 	},
 	["SilvermoonCity"] = {
 		[66837393] = { criteria = 3782, zone = 480, faction = "Horde", note = L["Upstairs"] }, -- The Alliance of Lordaeron
@@ -207,9 +207,9 @@ local data = {
 		[25096990] = { criteria = 3773, zone = 765 }, -- Kel'thuzad and the Forming of the Scourge
 		[30334121] = { criteria = 3774, zone = 765 }, -- Kil'jaeden and the Shadow Pact
 		[25197015] = { criteria = 3785, zone = 765 }, -- The Birth of the Lich King
-		[24977001] = { criteria = 3792, zone = 765 }, -- The Lich King Triumphant
+		[24977001] = { criteria = 3792, zone = 765, unique = true }, -- The Lich King Triumphant
 		[27737456] = { criteria = 3795, zone = 765 }, -- The Scourge of Lordaeron
-		[30154148] = { criteria = 3797, zone = 765 }, -- The Seven Kingdoms
+		[30154148] = { criteria = 3797, zone = 765, unique = true }, -- The Seven Kingdoms
 		[25827187] = { criteria = 3801, zone = 765 }, -- War of the Spider
 	},
 	["SwampOfSorrows"] = {
@@ -333,12 +333,24 @@ do
 	end
 
 	local function setAllWaypoints()
+		local uniqueZones = {}
 		for mapFile, coords in pairs(data) do
 			for coord, book in pairs(coords) do
 				if book.name and not book.read then
 					setWaypoint(mapFile, coord)
+					if book.unique then
+						local zone = GetMapNameByID(book.zone)
+						if not uniqueZones[zone] then
+							tinsert(uniqueZones, zone)
+							uniqueZones[zone] = true
+						end
+					end
 				end
 			end
+		end
+		if #uniqueZones > 0 then
+			sort(uniqueZones)
+			DEFAULT_CHAT_FRAME:AddMessage("|cff00ddba"..ACHIEVEMENT_NAME..":|r "..format(L["Unread unique books in: %s"], table.concat(uniqueZones, ", ")))
 		end
 		--local waypoint = data[CURRENT_MAP][CURRENT_COORD].waypoint
 		--TomTom:SetCrazyArrow(waypoint, TomTom.profile.arrow.arrival, waypoint.title)
