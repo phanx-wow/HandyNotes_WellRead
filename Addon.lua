@@ -357,58 +357,60 @@ do
 		TomTom:SetClosestWaypoint()
 	end
 
-	local slashState
-	SLASH_HNWELLREAD1 = "/wellread"
-	SLASH_HNWELLREAD2 = "/" .. strlower(gsub(ACHIEVEMENT_NAME, "%s", ""))
-	SlashCmdList.HNWELLREAD = function()
-		if slashState then
-			for mapFile, coords in pairs(data) do
-				for coord, book in pairs(coords) do
-					local waypoint = book.waypoint
-					if waypoint and TomTom:IsValidWaypoint(waypoint) then
-						TomTomTom:RemoveWaypoint(waypoint)
+	if TomTom then
+		local slashState
+		SLASH_HNWELLREAD1 = "/wellread"
+		SLASH_HNWELLREAD2 = "/" .. strlower(gsub(ACHIEVEMENT_NAME, "%s", ""))
+		SlashCmdList.HNWELLREAD = function()
+			if slashState then
+				for mapFile, coords in pairs(data) do
+					for coord, book in pairs(coords) do
+						local waypoint = book.waypoint
+						if waypoint and TomTom:IsValidWaypoint(waypoint) then
+							TomTom:RemoveWaypoint(waypoint)
+						end
+						book.waypoint = nil
 					end
-					book.waypoint = nil
 				end
+				slashState = nil
+				--print("unset")
+			else
+				setAllWaypoints()
+				slashState = true
+				--print("set")
 			end
-			slashState = nil
-			--print("unset")
-		else
-			setAllWaypoints()
-			slashState = true
-			--print("set")
 		end
-	end
 
-	local menu = CreateFrame("Frame", "HandyNotesWellReadMenu", nil, "UIDropDownMenuTemplate")
-	menu.displayMode = "MENU"
-	menu.initialize = function(menu, level)
-		if level ~= 1 then return end
-		local info = UIDropDownMenu_CreateInfo()
+		local menu = CreateFrame("Frame", "HandyNotesWellReadMenu", nil, "UIDropDownMenuTemplate")
+		menu.displayMode = "MENU"
+		menu.initialize = function(menu, level)
+			if level ~= 1 then return end
+			local info = UIDropDownMenu_CreateInfo()
 
-		info.text = L["Set waypoints for..."]
-		info.isTitle = 1
-		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info, level)
+			info.text = L["Set waypoints for..."]
+			info.isTitle = 1
+			info.notCheckable = 1
+			UIDropDownMenu_AddButton(info, level)
 
-		info.disabled = nil -- isTitle also sets disabled
-		info.isTitle = nil
+			info.disabled = nil -- isTitle also sets disabled
+			info.isTitle = nil
 
-		info.text = L["Just this book"]
-		info.func = setWaypoint
-		UIDropDownMenu_AddButton(info, level)
+			info.text = L["Just this book"]
+			info.func = setWaypoint
+			UIDropDownMenu_AddButton(info, level)
 
-		info.text = L["All books in this zone"]
-		info.func = setAllZoneWaypoints
-		UIDropDownMenu_AddButton(info, level)
+			info.text = L["All books in this zone"]
+			info.func = setAllZoneWaypoints
+			UIDropDownMenu_AddButton(info, level)
 
-		info.text = L["All books everywhere"]
-		info.func = setAllWaypoints
-		UIDropDownMenu_AddButton(info, level)
+			info.text = L["All books everywhere"]
+			info.func = setAllWaypoints
+			UIDropDownMenu_AddButton(info, level)
 
-		info.text = CANCEL
-		info.func = CloseDropDownMenus
-		UIDropDownMenu_AddButton(info, level)
+			info.text = CANCEL
+			info.func = CloseDropDownMenus
+			UIDropDownMenu_AddButton(info, level)
+		end
 	end
 
 	function pluginHandler:OnClick(button, down, mapFile, coord)
