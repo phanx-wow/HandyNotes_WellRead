@@ -1,3 +1,7 @@
+### Version 6.0.3.3
+
+* Significantly improved overall performance
+
 ### Version 6.0.3.2
 
 * Fixed an error when toggling off the `/wellread` command

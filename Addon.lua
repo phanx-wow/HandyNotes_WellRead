@@ -19,7 +19,7 @@ local L = setmetatable({}, { __index = function(t, k) t[k] = k return k end })
 if GetLocale() == "deDE" then
 	-- Main
 	L["<Right-Click to set a waypoint in TomTom.>"] = "<Rechtsklick, um eine Zielpunkt in TomTom zu setzen.>"
-	L["<Ctrl-Right-Click for additional waypoint options.>"] = "<STRG-Rechtsklick für mehr Zielpunksoptionen.>"
+	L["<Ctrl-Right-Click for additional waypoint options.>"] = "<STRG-Rechtsklick für mehr Zielpunktoptionen.>"
 	L["Set waypoints for..."] = "Setz Zielpunkte für..."
 	L["Just this book"] = "Nur dieses Büch"
 	L["All books in this zone"] = "Alle Bücher in diesem Gebiet"
@@ -457,12 +457,23 @@ Addon:SetScript("OnEvent", function(self, event, ...) return self[event](self, .
 function Addon:PLAYER_LOGIN()
 	--print("PLAYER_LOGIN")
 	HandyNotes:RegisterPluginDB(ACHIEVEMENT_NAME, pluginHandler)
-	self:RegisterEvent("CRITERIA_UPDATE")
+	self:RegisterEvent("ITEM_TEXT_BEGIN")
+	self:RegisterEvent("ITEM_TEXT_CLOSED")
 	self:CRITERIA_UPDATE()
 end
 
-function Addon:CRITERIA_UPDATE(...)
-	--print("CRITERIA_UPDATE", ...)
+function Addon:ITEM_TEXT_BEGIN()
+	--print("ITEM_TEXT_BEGIN")
+	self:RegisterEvent("CRITERIA_UPDATE")
+end
+
+function Addon:ITEM_TEXT_CLOSED()
+	--print("ITEM_TEXT_CLOSED")
+	self:UnregisterEvent("CRITERIA_UPDATE")
+end	
+
+function Addon:CRITERIA_UPDATE()
+	--print("CRITERIA_UPDATE")
 	local changed
 	for mapFile, coords in pairs(data) do
 		for coord, book in pairs(coords) do
