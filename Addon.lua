@@ -411,18 +411,18 @@ do
 			info.func = CloseDropDownMenus
 			UIDropDownMenu_AddButton(info, level)
 		end
-	end
 
-	function pluginHandler:OnClick(button, down, mapFile, coord)
-		if down or button ~= "RightButton" or not TomTom then
-			return
-		end
-		mapFile = gsub(mapFile, "_terrain%d+$", "")
-		if IsControlKeyDown() then
-			CURRENT_MAP, CURRENT_COORD = mapFile, coord
-			ToggleDropDownMenu(1, nil, menu, self, 0, 0)
-		else
-			setWaypoint(mapFile, coord)
+		function pluginHandler:OnClick(button, down, mapFile, coord)
+			if down or button ~= "RightButton" then
+				return
+			end
+			mapFile = gsub(mapFile, "_terrain%d+$", "")
+			if IsControlKeyDown() then
+				CURRENT_MAP, CURRENT_COORD = mapFile, coord
+				ToggleDropDownMenu(1, nil, menu, self, 0, 0)
+			else
+				setWaypoint(mapFile, coord)
+			end
 		end
 	end
 end
