@@ -1,7 +1,7 @@
 --[[--------------------------------------------------------------------
 	HandyNotes: Well Read
 	Shows the books you still need for the Well Read achievement.
-	Copyright (c) 2014 Phanx <addons@phanx.net>. All rights reserved.
+	Copyright (c) 2014-2015 Phanx <addons@phanx.net>. All rights reserved.
 	http://www.wowinterface.com/downloads/info-HandyNotes-WellRead.html
 	http://www.curse.com/addons/wow/handynotes-well-read
 	https://github.com/Phanx/HandyNotes_WellRead
@@ -294,7 +294,7 @@ end
 
 ------------------------------------------------------------------------
 
-do
+if TomTom then
 	local function setWaypoint(mapFile, coord)
 		local book = data[mapFile] and data[mapFile][coord]
 		if not book then return end
@@ -357,72 +357,70 @@ do
 		TomTom:SetClosestWaypoint()
 	end
 
-	if TomTom then
-		local slashState
-		SLASH_HNWELLREAD1 = "/wellread"
-		SLASH_HNWELLREAD2 = "/" .. strlower(gsub(ACHIEVEMENT_NAME, "%s", ""))
-		SlashCmdList.HNWELLREAD = function()
-			if slashState then
-				for mapFile, coords in pairs(data) do
-					for coord, book in pairs(coords) do
-						local waypoint = book.waypoint
-						if waypoint and TomTom:IsValidWaypoint(waypoint) then
-							TomTom:RemoveWaypoint(waypoint)
-						end
-						book.waypoint = nil
+	local slashState
+	SLASH_HNWELLREAD1 = "/wellread"
+	SLASH_HNWELLREAD2 = "/" .. strlower(gsub(ACHIEVEMENT_NAME, "%s", ""))
+	SlashCmdList.HNWELLREAD = function()
+		if slashState then
+			for mapFile, coords in pairs(data) do
+				for coord, book in pairs(coords) do
+					local waypoint = book.waypoint
+					if waypoint and TomTom:IsValidWaypoint(waypoint) then
+						TomTom:RemoveWaypoint(waypoint)
 					end
+					book.waypoint = nil
 				end
-				slashState = nil
-				--print("unset")
-			else
-				setAllWaypoints()
-				slashState = true
-				--print("set")
 			end
+			slashState = nil
+			--print("unset")
+		else
+			setAllWaypoints()
+			slashState = true
+			--print("set")
 		end
+	end
 
-		local menu = CreateFrame("Frame", "HandyNotesWellReadMenu", nil, "UIDropDownMenuTemplate")
-		menu.displayMode = "MENU"
-		menu.initialize = function(menu, level)
-			if level ~= 1 then return end
-			local info = UIDropDownMenu_CreateInfo()
+	local menu = CreateFrame("Frame", "HandyNotesWellReadMenu", nil, "UIDropDownMenuTemplate")
+	menu.displayMode = "MENU"
+	menu.initialize = function(menu, level)
+		if level ~= 1 then return end
+		local info = UIDropDownMenu_CreateInfo()
 
-			info.text = L["Set waypoints for..."]
-			info.isTitle = 1
-			info.notCheckable = 1
-			UIDropDownMenu_AddButton(info, level)
+		info.text = L["Set waypoints for..."]
+		info.isTitle = 1
+		info.notCheckable = 1
+		UIDropDownMenu_AddButton(info, level)
 
-			info.disabled = nil -- isTitle also sets disabled
-			info.isTitle = nil
+		info.disabled = nil -- isTitle also sets disabled
+		info.isTitle = nil
 
-			info.text = L["Just this book"]
-			info.func = setWaypoint
-			UIDropDownMenu_AddButton(info, level)
+		info.text = L["Just this book"]
+		info.func = setWaypoint
+		UIDropDownMenu_AddButton(info, level)
 
-			info.text = L["All books in this zone"]
-			info.func = setAllZoneWaypoints
-			UIDropDownMenu_AddButton(info, level)
+		info.text = L["All books in this zone"]
+		info.func = setAllZoneWaypoints
+		UIDropDownMenu_AddButton(info, level)
 
-			info.text = L["All books everywhere"]
-			info.func = setAllWaypoints
-			UIDropDownMenu_AddButton(info, level)
+		info.text = L["All books everywhere"]
+		info.func = setAllWaypoints
+		UIDropDownMenu_AddButton(info, level)
 
-			info.text = CANCEL
-			info.func = CloseDropDownMenus
-			UIDropDownMenu_AddButton(info, level)
+		info.text = CANCEL
+		info.func = CloseDropDownMenus
+		UIDropDownMenu_AddButton(info, level)
+	end
+
+	function pluginHandler:OnClick(button, down, mapFile, coord)
+		if down or button ~= "RightButton" then
+			return
 		end
-
-		function pluginHandler:OnClick(button, down, mapFile, coord)
-			if down or button ~= "RightButton" then
-				return
-			end
-			mapFile = gsub(mapFile, "_terrain%d+$", "")
-			if IsControlKeyDown() then
-				CURRENT_MAP, CURRENT_COORD = mapFile, coord
-				ToggleDropDownMenu(1, nil, menu, self, 0, 0)
-			else
-				setWaypoint(mapFile, coord)
-			end
+		mapFile = gsub(mapFile, "_terrain%d+$", "")
+		if IsControlKeyDown() then
+			CURRENT_MAP, CURRENT_COORD = mapFile, coord
+			ToggleDropDownMenu(1, nil, menu, self, 0, 0)
+		else
+			setWaypoint(mapFile, coord)
 		end
 	end
 end

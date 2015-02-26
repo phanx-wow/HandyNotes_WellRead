@@ -1,4 +1,4 @@
-## Interface: 60000
+## Interface: 60100
 ## Version: @project-version@
 
 ## Title: HandyNotes: Well Read
@@ -12,9 +12,10 @@
 
 ## Author: Phanx
 ## X-Email: addons@phanx.net
-## X-Copyright: Copyright (c) 2014 Phanx. All rights reserved.
+## X-Copyright: Copyright (c) 2014-2015 Phanx. All rights reserved.
 ## X-Website: https://github.com/Phanx/HandyNotes_WellRead
 
 ## Dependencies: HandyNotes
+## OptionalDependencies: TomTom
 
 Addon.lua

@@ -1,3 +1,8 @@
+### Version 6.1.0.4 (2015 Feb 26)
+
+* Updated for WoW 6.1
+* Fixed an issue with the right-click menu on map icons
+
 ### Version 6.0.3.3 (2014 Dec 13)
 
 * Significantly improved overall performance
