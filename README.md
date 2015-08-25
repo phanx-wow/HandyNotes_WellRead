@@ -6,7 +6,7 @@ HandyNotes: Well Read
 **ES** — Muestra los libros que todavía debes que leer para el logro "Erudito".
 
 * [Download on Curse](http://www.curse.com/addons/wow/handynotes-well-read/)
-* [Download on WoWInterface](http://www.wowinterface.com/downloads/info-HandyNotes-WellRead.html)
+* [Download on WoWInterface](http://www.wowinterface.com/downloads/info23359-HandyNotes-WellRead.html)
 
 Requires [HandyNotes](http://www.curse.com/addons/wow/handynotes/).
 
