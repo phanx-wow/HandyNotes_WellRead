@@ -1,3 +1,8 @@
+### Version 7.3.5.0
+
+* Fixed the position of "Beyond the Dark Portal" in Stormwind
+* Added several new notes to clarify locations
+
 ### Version 7.1.0.0
 
 * Updated for WoW 7.1
