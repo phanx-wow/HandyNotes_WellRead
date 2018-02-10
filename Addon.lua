@@ -29,6 +29,7 @@ if GetLocale() == "deDE" then
 	L["Alliance area"] = "Allianzgegend"
 	L["Around back"] = "Hinter dem Gebäude"
 	L["Bottom level"] = "Im Untergeschoss"
+	L["Enter from the north"] = "Vom Norden kommend"
 	L["Halfway down, in the Tavern of Time"] = "Halbwegs nach unten, in der Taverne der Zeit"
 	L["Ground floor"] = "Im Erdgeschoss"
 	L["Horde area"] = "Hordegegend"
@@ -52,6 +53,7 @@ elseif GetLocale():match("^es") then
 	L["Alliance area"] = "Zona de la Alianza"
 	L["Around back"] = "Por detrás"
 	L["Bottom level"] = "En el piso inferior"
+	L["Enter from the north"] = "Ingresa desde el norte"
 	L["Halfway down, in the Tavern of Time"] = "A mitad de la bajada, en la Taberna del Tiempo"
 	L["Ground floor"] = "En la planta baja"
 	L["Horde area"] = "Zona de la Horda"
@@ -186,10 +188,10 @@ local data = {
 	["StormwindCity"] = {
 		[85772369] = { criteria = 3762, zone = 301, faction = "Alliance" }, -- Aegwynn and the Dragon Hunt
 		[85112617] = { criteria = 3763, zone = 301, faction = "Alliance" }, -- Aftermath of the Second War
-		[51937458] = { criteria = 3765, zone = 301, faction = "Alliance" }, -- Archimonde's Return and the Flight to Kalimdor
+		[51937458] = { criteria = 3765, zone = 301, faction = "Alliance", note = L["Enter from the north"] }, -- Archimonde's Return and the Flight to Kalimdor
 		[84872351] = { criteria = 3766, zone = 301, faction = "Alliance" }, -- Beyond the Dark Portal
 		[84832353] = { criteria = 3768, zone = 301, faction = "Alliance" }, -- Civil War in the Plaguelands
-		[51867466] = { criteria = 3776, zone = 301, faction = "Alliance" }, -- Mount Hyjal and Illidan's Gift
+		[51867466] = { criteria = 3776, zone = 301, faction = "Alliance", note = L["Enter from the north"] }, -- Mount Hyjal and Illidan's Gift
 		[85172628] = { criteria = 3782, zone = 301, faction = "Alliance" }, -- The Alliance of Lordaeron
 		[86533611] = { criteria = 3783, zone = 301, faction = "Alliance" }, -- The Battle of Grim Batol
 		[87103600] = { criteria = 3786, zone = 301, faction = "Alliance" }, -- The Dark Portal and the Fall of Stormwind
