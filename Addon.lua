@@ -1,9 +1,9 @@
 --[[--------------------------------------------------------------------
 	HandyNotes: Well Read
 	Shows the books you still need for the Well Read achievement.
-	Copyright (c) 2014-2016 Phanx <addons@phanx.net>. All rights reserved.
-	http://www.wowinterface.com/downloads/info-HandyNotes-WellRead.html
-	https://mods.curse.com/addons/wow/handynotes-well-read
+	Copyright (c) 2014-2018 Phanx <addons@phanx.net>. All rights reserved.
+	https://www.wowinterface.com/downloads/info-HandyNotes-WellRead.html
+	https://www.curseforge.com/wow/addons/handynotes-well-read
 	https://github.com/Phanx/HandyNotes_WellRead
 ----------------------------------------------------------------------]]
 

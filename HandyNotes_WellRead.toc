@@ -1,4 +1,4 @@
-## Interface: 70100
+## Interface: 70300
 ## Version: @project-version@
 
 ## Title: HandyNotes: Well Read
@@ -12,9 +12,9 @@
 
 ## Author: Phanx
 ## X-Email: addons@phanx.net
-## X-Copyright: Copyright (c) 2014-2016 Phanx. All rights reserved.
+## X-Copyright: Copyright (c) 2014-2018 Phanx. All rights reserved.
 ## X-Website: https://github.com/Phanx/HandyNotes_WellRead
-## X-Curse-Project-ID: handynotes-well-read
+## X-Curse-Project-ID: 87542
 ## X-WoWI-ID: 23359
 
 ## Dependencies: HandyNotes
