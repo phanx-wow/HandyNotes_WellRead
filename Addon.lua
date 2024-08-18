@@ -12,7 +12,7 @@ local HandyNotes = LibStub("AceAddon-3.0"):GetAddon("HandyNotes")
 
 local ACHIEVEMENT_ID = 1244
 local ICON = "Interface\\AddOns\\HandyNotes_WellRead\\Book"
-local ADDON_TITLE = GetAddOnMetadata(ADDON_NAME, "Title")
+local ADDON_TITLE = C_AddOns.GetAddOnMetadata(ADDON_NAME, "Title")
 local ACHIEVEMENT_NAME = select(2, GetAchievementInfo(ACHIEVEMENT_ID))
 
 local L = setmetatable({}, { __index = function(t, k) t[k] = k return k end })
